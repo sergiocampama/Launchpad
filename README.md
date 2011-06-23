@@ -97,7 +97,8 @@ Now you should have `msp430-gcc` ready to go.
 
 Now, having mspdebug installed with the instructions from their webpage, connect your Launchpad to Ubuntu and run `mspdebug rf2500`. If it doesn't work, don't panic, follow the next steps (based on this [article](http://karuppuswamy.com/wordpress/2010/10/07/debugging-ez430-chronos-with-mspdebug-tool-in-ubuntu-linux/).).
 
-	sudo echo "ATTRS{idVendor}=="0451", ATTRS{idProduct}=="f432", MODE="0660", GROUP="plugdev"" >> /etc/udev/rules.d/71-persistent-msp430.rules
+First, as root, add `ATTRS{idVendor}=="0451", ATTRS{idProduct}=="f432", MODE="0660", GROUP="plugdev"` to `/etc/udev/rules.d/71-persistent-msp430.rules`. Then run this commands:
+
 	sudo addgroup YOUR_USERNAME plugdev
 	sudo restart udev
 	
