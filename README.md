@@ -93,7 +93,7 @@ Finally, to be able to use mspgcc without restarting the terminal, we source tha
 
 Now you should have `msp430-gcc` ready to go.
 
-###MSPDEBUG USB permissions
+####mspdebug USB permissions
 
 Now, having mspdebug installed with the instructions from their webpage, connect your Launchpad to Ubuntu and run `mspdebug rf2500`. If it doesn't work, don't panic, follow the next steps (based on this [article](http://karuppuswamy.com/wordpress/2010/10/07/debugging-ez430-chronos-with-mspdebug-tool-in-ubuntu-linux/).).
 
