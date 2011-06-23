@@ -1,0 +1,50 @@
+# Sergio Campama 2011
+# http://kaipi.me
+#
+# Made for the TI MSP430 LaunchPad
+# http://ti.com/launchpadwiki
+#
+# Released under the Beerware License
+# http://en.wikipedia.org/wiki/Beerware
+
+CC = "msp430-gcc"
+
+CFLAGS = "-mmcu=msp430x2011 -c -Wall -Os "
+LFLAGS = "-mmcu=msp430x2011 "
+
+OBJ_DIR = 'obj'
+directory OBJ_DIR
+
+INCLUDES = FileList['src/**/*.h']
+
+CFLAGS << INCLUDES.join(' -I').insert(0, '-I') unless INCLUDES.empty?
+
+SRC_FILES = FileList['src/**/*.c']
+OBJ_FILES = SRC_FILES.collect { |src| File.join(OBJ_DIR, File.basename(src).ext('obj'))}
+
+BIN_OUT = 'binary.elf'
+
+task :build => :link
+
+task :default => :link
+
+task :link => :compile do
+  puts "Linking binary "
+  `msp430-gcc #{LFLAGS} #{OBJ_FILES.join(" ")} -o #{BIN_OUT}`
+  abort "Abort: Error al linkear" unless $?.to_i == 0
+  puts "Binary generated succesfully"
+end
+
+task :compile => OBJ_DIR do
+	`rm -rf #{File.join(OBJ_DIR, '*')}/* #{BIN_OUT}`
+  SRC_FILES.each do |source|
+    puts "Compiling #{File.basename(source)}"
+		`#{CC} #{CFLAGS} #{source} -o #{File.join(OBJ_DIR, File.basename(source).ext('obj'))}`
+    abort "Abort: Error al compilar #{File.basename(source)}" unless $?.to_i == 0
+  end
+end
+
+task :install do
+  abort "Abort: #{BIN_OUT} not found. Run 'rake build' first" unless File.exists?(BIN_OUT)
+  puts "Run 'mspdebug rf2500'.\nInside, execute the following commands:\n\terase\n\tprog #{BIN_OUT}\n\trun"
+end
