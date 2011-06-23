@@ -7,10 +7,9 @@
 # Released under the Beerware License
 # http://en.wikipedia.org/wiki/Beerware
 
-
 CC = "msp430-gcc"
 
-CFLAGS = "-mmcu=msp430x2011 -c -Wall -O0 "
+CFLAGS = "-mmcu=msp430x2011 -c -Wall -Os "
 LFLAGS = "-mmcu=msp430x2011 "
 
 OBJ_DIR = 'obj'
@@ -37,6 +36,7 @@ task :link => :compile do
 end
 
 task :compile => OBJ_DIR do
+	`rm -rf #{File.join(OBJ_DIR, '*')}/* #{BIN_OUT}`
   SRC_FILES.each do |source|
     puts "Compiling #{File.basename(source)}"
 		`#{CC} #{CFLAGS} #{source} -o #{File.join(OBJ_DIR, File.basename(source).ext('obj'))}`
