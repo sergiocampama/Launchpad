@@ -8,7 +8,7 @@ This are simple Launchpad projects to get stuff starting. I think it's somewhat 
 
 To compile the binaries, I assume that mspgcc is installed. If it's not, check out the last part of this README. It's not trivial.
 
-To install the binaries in the Launchpad I use `mspdebug`, which is fairly easy to install, and can be found in [here](http://mspdebug.sourceforge.net/)
+To install the binaries on the Launchpad I use `mspdebug`, which is fairly easy to install, and can be found in [here](http://mspdebug.sourceforge.net/)
 
 For the build system, I use Rake, so you'll need ruby and rake installed. After you have that, you can call `rake` and the project will compile into the final binary. The cool thing about it is that it automatically checks for all *.c files inside the 'src' folder, so if you want to create your own apps, just add the files and it'll work. Also, when compiling, all the 'src' subfolders are added to the header includes, so you can just '#include "anywhere.h"' and it'll also work. Just be sure to not conflict with system header files. Instructions on how to install the binary on the Launchpad can be found running `rake install`. I plan on fixing this to actually install it, but I still have to figure out how to do it without entering the mspdebug console.
 
