@@ -2,6 +2,15 @@
 
 This are simple Launchpad projects to get stuff starting. I think it's somewhat difficult to get functional code in the internet, so I want to do my part by creating simple projects using various techniques.
 
+Sergio Campama 2011 
+http://kaipi.me
+
+Made for the TI MSP430 LaunchPad 
+http://ti.com/launchpadwiki
+
+Released under the Beerware License 
+http://en.wikipedia.org/wiki/Beerware
+
 ----
 
 ### Dependencies

@@ -1,3 +1,13 @@
+# Sergio Campama 2011
+# http://kaipi.me
+#
+# Made for the TI MSP430 LaunchPad
+# http://ti.com/launchpadwiki
+#
+# Released under the Beerware License
+# http://en.wikipedia.org/wiki/Beerware
+
+
 CC = "msp430-gcc"
 
 CFLAGS = "-mmcu=msp430x2011 -c -Wall -O0 "

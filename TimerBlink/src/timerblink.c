@@ -1,3 +1,12 @@
+// Sergio Campama 2011
+// http://kaipi.me
+//
+// Made for the TI MSP430 LaunchPad
+// http://ti.com/launchpadwiki
+//
+// Released under the Beerware License
+// http://en.wikipedia.org/wiki/Beerware
+
 #include <io.h>
 #include <signal.h>
 
