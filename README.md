@@ -106,6 +106,7 @@ Now, we'll get the source code and compile it
 This last step can take some time, and it won't show any output in the mean time. But don't worry, it will end. After it's finished, we need to make the new binaries accessible, so we'll add the following lines at the end of `~/.bashrc`
 
 ```#MSPGCC binaries
+
 export PATH=$PATH:/opt/mspgcc/bin
 ```
 
