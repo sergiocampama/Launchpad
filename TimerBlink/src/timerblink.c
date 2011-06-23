@@ -65,7 +65,7 @@ int main()
 	timer_start();
 	
 	//We enter the LPM3 Low Power Mode, which only leaves ACLK running
-	//This way, the CPU will be off for 1 second, and it only will work on interrupts
+	//This way, the CPU will be off for 1 second, toggle the LED, and turn off for another second
 	_BIS_SR(LPM3_bits);
 	
 	return 0;
