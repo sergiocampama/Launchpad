@@ -49,3 +49,7 @@ First, we need gcc-3.4 because this will compile mspgcc's tools. To do this run 
 `cd ..`
 
 `rm -rf DELEME`
+
+With this, you SHOULD have a working gcc-3.4. Maybe, if you're as unlucky as me, you'll have a non working version of gcc-3.4, which can be tested with this code
+
+``
