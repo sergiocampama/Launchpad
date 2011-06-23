@@ -24,7 +24,9 @@ welcome to buy me a beer if you'd like.
 
 ### MSPGCC install instructions
 
-This was tested on a new install of Ubuntu Server 11.04 64 bits. It's a server because I run it on a VMWare Virtual Machine, and I only connect to it via `ssh` and Mac's 'Connect to...' system. So basically I develop on the comfort of my mac, while having Ubuntu's flexibility for compiling
+This was tested on a new install of Ubuntu Server 11.04 64 bits. It's a server because I run it on a VMWare Virtual Machine, and I only connect to it via `ssh` and Mac's 'Connect to...' system. So basically I develop on the comfort of my mac, while having Ubuntu's flexibility for compiling.
+
+This are the instructions for building MSPGCC 3, not 4, which is apparently a little more advanced, but this works for me, so this is what I use. If it works, don't fix it.
 
 ####gcc-3.4 installation
 
@@ -74,3 +76,32 @@ If you have a '-lgcc_s' not found error, then you'll have to run this others com
 
 `sudo ln /lib/x86_64-linux-gnu/libgcc_s.so.1 /usr/lib/gcc/x86_64-linux-gnu/3.4.6/libgcc_s.so`
 
+####mspgcc actual building
+
+So now we will be building mspgcc from scratch. First, we will need some dependencies
+
+`sudo apt-get install cvs patch ncurses-dev`
+
+Now, we'll get the source code and compile it
+
+`cvs -d:pserver:anonymous@mspgcc.cvs.sourceforge.net:/cvsroot/mspgcc login`
+
+`cvs -z3 -d:pserver:anonymous@mspgcc.cvs.sourceforge.net:/cvsroot/mspgcc co -P .`
+
+`cd packaging`
+
+`make folders`
+
+`CC=gcc-3.4 make build`
+
+This last step can take some time, and it won't show any output in the mean time. But don't worry, it will end. After it's finished, we need to make the new binaries accessible, so we'll add the following lines at the end of `~/.bashrc`
+
+`#MSPGCC binaries`
+
+`export PATH=$PATH:/opt/mspgcc/bin`
+
+Finally, to be able to use mspgcc without restarting the terminal, we source that last file
+
+`source ~/.bashrc`
+
+Now you should have `msp430-gcc` ready to go.
