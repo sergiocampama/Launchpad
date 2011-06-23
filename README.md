@@ -41,67 +41,46 @@ This are the instructions for building MSPGCC 3, not 4, which is apparently a li
 
 First, we need gcc-3.4 because this will compile mspgcc's tools. To do this run the following commands
 
-`cd`
-
-`mkdir DELEME`
-
-`cd DELEME`
-
-`wget http://ge.archive.ubuntu.com/ubuntu/pool/universe/g/gcc-3.4/libstdc++6-dev_3.4.6-6ubuntu5_amd64.deb`
-
-`wget http://ge.archive.ubuntu.com/ubuntu/pool/universe/g/gcc-3.4/cpp-3.4_3.4.6-6ubuntu5_amd64.deb`
-
-`wget http://ge.archive.ubuntu.com/ubuntu/pool/universe/g/gcc-3.4/gcc-3.4_3.4.6-6ubuntu5_amd64.deb`
-
-`wget http://ge.archive.ubuntu.com/ubuntu/pool/universe/g/gcc-3.4/gcc-3.4-base_3.4.6-6ubuntu5_amd64.deb`
-
-`wget http://ge.archive.ubuntu.com/ubuntu/pool/universe/g/gcc-3.4/g++-3.4_3.4.6-6ubuntu5_amd64.deb`
-
-`sudo dpkg -i *.deb`
-
-`cd ..`
-
-`rm -rf DELEME`
+    cd
+    mkdir DELEME
+    cd DELEME
+    wget http://ge.archive.ubuntu.com/ubuntu/pool/universe/g/gcc-3.4/libstdc++6-dev_3.4.6-6ubuntu5_amd64.deb
+    wget http://ge.archive.ubuntu.com/ubuntu/pool/universe/g/gcc-3.4/cpp-3.4_3.4.6-6ubuntu5_amd64.deb
+    wget http://ge.archive.ubuntu.com/ubuntu/pool/universe/g/gcc-3.4/gcc-3.4_3.4.6-6ubuntu5_amd64.deb
+    wget http://ge.archive.ubuntu.com/ubuntu/pool/universe/g/gcc-3.4/gcc-3.4-base_3.4.6-6ubuntu5_amd64.deb
+    wget http://ge.archive.ubuntu.com/ubuntu/pool/universe/g/gcc-3.4/g++-3.4_3.4.6-6ubuntu5_amd64.deb
+    sudo dpkg -i *.deb
+    cd ..
+    rm -rf DELEME
 
 With this, you SHOULD have a working gcc-3.4. Maybe, if you're as unlucky as me, you'll have a non working version of gcc-3.4, which can be tested with this code
 
-`cd`
-
-`mkdir DELEME`
-
-`cd DELEME`
-
-`echo "int main(){return 0;}" >> temp.c`
-
-`gcc-3.4 temp.c`
-
-`cd ..`
-
-`rm -rf DELEME`
+    cd
+    mkdir DELEME
+    cd DELEME
+    echo "int main(){return 0;}" >> temp.c
+    gcc-3.4 temp.c
+    cd ..
+    rm -rf DELEME
 
 If you have a '-lgcc_s' not found error, then you'll have to run this others commands too.
 
-`sudo rm -rf /usr/lib/gcc/x86_64-linux-gnu/3.4.6/libgcc_s.so`
-
-`sudo ln /lib/x86_64-linux-gnu/libgcc_s.so.1 /usr/lib/gcc/x86_64-linux-gnu/3.4.6/libgcc_s.so`
+    sudo rm -rf /usr/lib/gcc/x86_64-linux-gnu/3.4.6/libgcc_s.so
+    sudo ln /lib/x86_64-linux-gnu/libgcc_s.so.1 /usr/lib/gcc/x86_64-linux-gnu/3.4.6/libgcc_s.so
 
 ####mspgcc actual building
 
 So now we will be building mspgcc from scratch. First, we will need some dependencies
 
-`sudo apt-get install cvs patch ncurses-dev`
+    sudo apt-get install cvs patch ncurses-dev
 
 Now, we'll get the source code and compile it
 
-`cvs -d:pserver:anonymous@mspgcc.cvs.sourceforge.net:/cvsroot/mspgcc login`
-
-`cvs -z3 -d:pserver:anonymous@mspgcc.cvs.sourceforge.net:/cvsroot/mspgcc co -P .`
-
-`cd packaging`
-
-`make folders`
-
-`CC=gcc-3.4 make build`
+    cvs -d:pserver:anonymous@mspgcc.cvs.sourceforge.net:/cvsroot/mspgcc login
+    cvs -z3 -d:pserver:anonymous@mspgcc.cvs.sourceforge.net:/cvsroot/mspgcc co -P .
+    cd packaging
+    make folders
+    CC=gcc-3.4 make build`
 
 This last step can take some time, and it won't show any output in the mean time. But don't worry, it will end. After it's finished, we need to make the new binaries accessible, so we'll add the following lines at the end of `~/.bashrc`
 
@@ -110,6 +89,6 @@ This last step can take some time, and it won't show any output in the mean time
 
 Finally, to be able to use mspgcc without restarting the terminal, we source that last file
 
-`source ~/.bashrc`
+    source ~/.bashrc
 
 Now you should have `msp430-gcc` ready to go.
