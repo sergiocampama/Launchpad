@@ -19,3 +19,23 @@ For the build system, I use Rake, so you'll need ruby and rake installed. After 
 Released under the [Beerware License](http://en.wikipedia.org/wiki/Beerware). That means you can
 do whatever the heck you want with it. If you find it useful and you run into me someday, you're
 welcome to buy me a beer if you'd like.
+
+----
+
+### MSPGCC install instructions
+
+This was tested on a new install of Ubuntu Server 11.04 64 bits. It's a server because I run it on a VMWare Virtual Machine, and I only connect to it via `ssh` and Mac's 'Connect to...' system. So basically I develop on the comfort of my mac, while having Ubuntu's flexibility for compiling
+
+First, we need gcc-3.4 because this will compile mspgcc's tools. To do this run the following commands
+
+`cd
+mkdir DELEME
+cd DELEME
+wget http://ge.archive.ubuntu.com/ubuntu/pool/universe/g/gcc-3.4/libstdc++6-dev_3.4.6-6ubuntu5_amd64.deb
+wget http://ge.archive.ubuntu.com/ubuntu/pool/universe/g/gcc-3.4/cpp-3.4_3.4.6-6ubuntu5_amd64.deb
+wget http://ge.archive.ubuntu.com/ubuntu/pool/universe/g/gcc-3.4/gcc-3.4_3.4.6-6ubuntu5_amd64.deb
+wget http://ge.archive.ubuntu.com/ubuntu/pool/universe/g/gcc-3.4/gcc-3.4-base_3.4.6-6ubuntu5_amd64.deb
+wget http://ge.archive.ubuntu.com/ubuntu/pool/universe/g/gcc-3.4/g++-3.4_3.4.6-6ubuntu5_amd64.deb
+sudo dpkg -i *.deb
+cd ..
+rm -rf DELEME`
