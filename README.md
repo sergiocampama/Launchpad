@@ -26,6 +26,8 @@ welcome to buy me a beer if you'd like.
 
 This was tested on a new install of Ubuntu Server 11.04 64 bits. It's a server because I run it on a VMWare Virtual Machine, and I only connect to it via `ssh` and Mac's 'Connect to...' system. So basically I develop on the comfort of my mac, while having Ubuntu's flexibility for compiling
 
+####gcc-3.4 installation
+
 First, we need gcc-3.4 because this will compile mspgcc's tools. To do this run the following commands
 
 `cd`
@@ -52,4 +54,23 @@ First, we need gcc-3.4 because this will compile mspgcc's tools. To do this run 
 
 With this, you SHOULD have a working gcc-3.4. Maybe, if you're as unlucky as me, you'll have a non working version of gcc-3.4, which can be tested with this code
 
-``
+`cd`
+
+`mkdir DELEME`
+
+`cd DELEME`
+
+`echo "int main(){return 0;}" >> temp.c`
+
+`gcc-3.4 temp.c`
+
+`cd ..`
+
+`rm -rf DELEME`
+
+If you have a '-lgcc_s' not found error, then you'll have to run this others commands too.
+
+`sudo rm -rf /usr/lib/gcc/x86_64-linux-gnu/3.4.6/libgcc_s.so`
+
+`sudo ln /lib/x86_64-linux-gnu/libgcc_s.so.1 /usr/lib/gcc/x86_64-linux-gnu/3.4.6/libgcc_s.so`
+
