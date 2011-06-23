@@ -1,0 +1,35 @@
+CFLAGS = "-mmcu=msp430x2011 -c -Wall -O0 "
+LFLAGS = "-mmcu=msp430x2011 "
+
+OBJ_DIR = 'obj'
+directory OBJ_DIR
+
+
+SRC_FILES = FileList['src/**/*.c']
+OBJ_FILES = SRC_FILES.collect { |src| File.join(OBJ_DIR, File.basename(src).ext('obj'))}
+
+BIN_OUT = 'binary.elf'
+
+task :build => :link
+
+task :default => :link
+
+task :link => :compile do
+  puts "Linking binary "
+  `msp430-gcc #{LFLAGS} #{OBJ_FILES.join(" ")} -o #{BIN_OUT}`
+  abort "Abort: Error al linkear" unless $?.to_i == 0
+  puts "Done"
+end
+
+task :compile => OBJ_DIR do
+  SRC_FILES.each do |source|
+    puts "Compiling #{File.basename(source)}"
+    `msp430-gcc #{CFLAGS} #{source} -o #{File.join(OBJ_DIR, File.basename(source).ext('obj'))}`
+    abort "Abort: Error al compilar #{File.basename(source)}" unless $?.to_i == 0
+  end
+end
+
+task :install do
+  abort "Abort: #{BIN_OUT} not found. Run 'rake build' first" unless File.exists?(BIN_OUT)
+  puts "Run 'mspdebug rf2500'.\nInside, execute the following commands:\n\terase\n\tprog #{BIN_OUT}\n\trun"
+end
