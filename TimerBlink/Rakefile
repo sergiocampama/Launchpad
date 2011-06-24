@@ -22,7 +22,7 @@ CFLAGS << INCLUDES.join(' -I').insert(0, '-I') unless INCLUDES.empty?
 SRC_FILES = FileList['src/**/*.c']
 OBJ_FILES = SRC_FILES.collect { |src| File.join(OBJ_DIR, File.basename(src).ext('obj'))}
 
-BIN_OUT = 'binary.elf'
+BIN_OUT = 'bin.elf'
 
 task :build => :link
 
@@ -30,7 +30,7 @@ task :default => :link
 
 task :link => :compile do
   puts "Linking binary "
-  `msp430-gcc #{LFLAGS} #{OBJ_FILES.join(" ")} -o #{BIN_OUT}`
+  `#{CC} #{LFLAGS} #{OBJ_FILES.join(" ")} -o #{BIN_OUT}`
   abort "Abort: Error al linkear" unless $?.to_i == 0
   puts "Binary generated succesfully"
 end

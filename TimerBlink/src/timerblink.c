@@ -32,6 +32,10 @@ void led_init()
 	//Set the direction as output
 	LED_DIR |= LED_RED; 
 	LED_DIR |= LED_GREEN;
+	
+	LED_OUT |= LED_GREEN;
+	LED_OUT &= ~LED_RED;
+	
 }
 
 void init()
@@ -73,6 +77,5 @@ int main()
 
 //CCR0 timer interrupt, which toggles the LEDs
 interrupt(TIMERA0_VECTOR) TIMERA0_ISR() {
-	LED_OUT ^= LED_GREEN;
-	LED_OUT ^= LED_RED;
+	LED_OUT ^= LED_GREEN + LED_RED;
 }
