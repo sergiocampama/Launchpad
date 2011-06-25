@@ -34,7 +34,7 @@ welcome to buy me a beer if you'd like.
 
 ### MSPGCC 'Uniarch'
 
-Uniarch was an initiative to unify all the work left behind by mspgcc3 and mspgcc4, while also separating the boundaries between the compiler and TI header files.
+Uniarch was an initiative to unify all the work left behind by mspgcc3 and mspgcc4, while also separating the boundaries between the compiler and TI header files. This 'branch' of mspgcc is the most advanced one, having over 300 supported MSP430 devices.
 
 This instructions are based on the comments inside the patch files of mspgcc.
 
@@ -58,7 +58,7 @@ First things first, we will need the latest release of the patch files from mspg
 	tar xjf mspgcc-20110612.tar.bz2
 	cd mspgcc-20110612
 
-Now we will need to download, patch and install the specific versions of binutils, gcc and gdb that will be used in mspgcc. This instructions are inside the patch files, but I list them here for a better reference
+Now we will need to download, patch and install the specific versions of binutils, gcc and gdb that will be used in mspgcc. This instructions are inside the patch files, but I list them here for a better reference.
 The bin directory will reside in /usr/local/mspgcc for this instructions. If you want to change the location, be sure to change it everywhere there is a prefix path
 
 	mkdir -p sources
@@ -98,7 +98,7 @@ Done with gcc, on to gdb
 	sudo make install 2>&1 | tee moi
 	cd ../..
 
-Perfect, so all thats left is the microcontroller definitions that are part of msp430mcu and libc that is part of msp430-libc. This files are not downloaded yet. What we have are 2 files *.version that define what version to download. The generic link to download msp430mcu is http://sourceforge.net/projects/mspgcc/files/msp430mcu/msp430mcu-YYYYMMDD.tar.bz2 and the one for msp430-libc https://sourceforge.net/projects/mspgcc/files/msp430-libc/msp430-libc-YYYYMMDD.tar.bz2 . YYYMMDD are replaced by the contents of msp430mcu.version and msp430-libc.version
+Perfect, so all that's left is the microcontroller definitions that are part of msp430mcu and libc that is part of msp430-libc. This files are not downloaded yet. What we have are 2 files *.version that define what version to download. The generic link to download msp430mcu is http://sourceforge.net/projects/mspgcc/files/msp430mcu/msp430mcu-YYYYMMDD.tar.bz2 and the one for msp430-libc https://sourceforge.net/projects/mspgcc/files/msp430-libc/msp430-libc-YYYYMMDD.tar.bz2 . YYYMMDD are replaced by the contents of msp430mcu.version and msp430-libc.version
 
 	wget http://sourceforge.net/projects/mspgcc/files/msp430mcu/msp430mcu-20110613.tar.bz2
 	tar xjf msp430mcu-20110613.tar.bz2
@@ -106,7 +106,7 @@ Perfect, so all thats left is the microcontroller definitions that are part of m
 	sudo MSP430MCU_ROOT=$(pwd) ./scripts/install.sh /usr/local/mspgcc 
 	cd ..
 
-Now we need to compile and install libc for mspgcc. For that we need to put the mspgcc binaries in PATH so the will be correctly referenced in the Makefile. For that we will expand the PATH in .bashrc . Add this lines to the end of ~/.bashrc
+Now we need to compile and install libc for mspgcc, so we need to put the mspgcc binaries in PATH so the will be correctly referenced in the Makefile. For that we will expand the PATH in .bashrc . Add this lines to the end of ~/.bashrc
 
 	#MSPGCC binary path
 	export PATH=$PATH:/usr/local/mspgcc/bin
