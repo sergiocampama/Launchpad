@@ -103,42 +103,27 @@ Perfect, so all thats left is the microcontroller definitions that are part of m
 	wget http://sourceforge.net/projects/mspgcc/files/msp430mcu/msp430mcu-20110613.tar.bz2
 	tar xjf msp430mcu-20110613.tar.bz2
 	cd msp430mcu-20110613
-
-Now, I don't know why, but the regular way doesn't work on my setup. So, for the sake of getting this done, edit scripts/install.sh and place this on the top, just after the comments
-
-	MSP430MCU_ROOT=${2}
-
-Then run
-
-	sudo ./scripts/install.sh /usr/local/mspgcc $(pwd)
+	sudo MSP430MCU_ROOT=$(pwd) ./scripts/install.sh /usr/local/mspgcc 
 	cd ..
- 
-Finally we need to compile and install libc for mspgcc
 
-	wget https://sourceforge.net/projects/mspgcc/files/msp430-libc/msp430-libc-20110612.tar.bz2
-	tar xjf msp430-libc-20110612.tar.bz2
-	cd msp430-libc-20110612/src
-
-Now, this is also weird, the regular way would be to do make; make PREFIX=/usr/local/mspgcc , but for some reason, make doesn't work for me. So, edit Makefile and change lines 23, 24, and 25 to
-
-	override CC = ${bindir}/msp430-gcc
-	override AS = ${bindir}/msp430-gcc -x assembler-with-cpp
-	override AR = ${bindir}/msp430-ar
-
-Some of you may say "But you didn't setup the PATH yet, so obviously it's not gonna work". Well, the first time I installed mspgcc uniarch, I DID setup PATH to find the binaries, but it still didn't work and I had to do this same changes. So, when you're done changing Makefile, do:
-
-	make PREFIX=/usr/local/mspgcc
-	sudo make PREFIX=/usr/local/mspgcc install
-
-Finally, we will setup the PATH in .bashrc . Add this lines to the end of ~/.bashrc
+Now we need to compile and install libc for mspgcc. For that we need to put the mspgcc binaries in PATH so the will be correctly referenced in the Makefile. For that we will expand the PATH in .bashrc . Add this lines to the end of ~/.bashrc
 
 	#MSPGCC binary path
 	export PATH=$PATH:/usr/local/mspgcc/bin
 
-Now source .bashrc to be able to call `msp430-gcc` right away. 
+And now, source .bashrc to get the current PATH up to date without having to logout and login again
 
 	source ~/.bashrc
 
+So, on to compile libc (remember that we still are inside msp430/mspgcc-20110612/sources folder)
+
+	wget https://sourceforge.net/projects/mspgcc/files/msp430-libc/msp430-libc-20110612.tar.bz2
+	tar xjf msp430-libc-20110612.tar.bz2
+	cd msp430-libc-20110612/src
+	make
+	sudo make PATH=$PATH PREFIX=/usr/local/mspgcc install
+
+We use PATH=$PATH inside sudo because ubuntu cleans the path when using sudo, and we need it to get the binaries to the right place without login in as root. It's a hack that shouldn't be. Read more about it [here](http://stackoverflow.com/questions/257616/sudo-changes-path-why).
 And that's it! You can compile the projects now. 
 
 ###MSPDEBUG USB permissions
