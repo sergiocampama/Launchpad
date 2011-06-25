@@ -1,6 +1,7 @@
 ## Launchpad Projects
 
-This are simple Launchpad projects to get stuff starting. I think it's somewhat difficult to get functional code in the internet, so I want to do my part by creating simple projects using various techniques.
+This are simple Launchpad projects to get stuff going. I think it's somewhat difficult to get functional code in the internet, so I want to do my part by creating simple projects using various techniques.
+These projects are tested on the mspgcc uniarch releases.
 
 Sergio Campama 2011 
 http://kaipi.me
@@ -15,7 +16,7 @@ http://en.wikipedia.org/wiki/Beerware
 
 ### Dependencies
 
-To compile the binaries, I assume that mspgcc is installed. If it's not, check out the last part of this README. It's not trivial.
+To compile the binaries, I assume that mspgcc uniarch is installed. If it's not, check out the last part of this README. It's not trivial.
 
 To install the binaries on the Launchpad I use `mspdebug`, which is fairly easy to install, and can be found in [here](http://mspdebug.sourceforge.net/)
 
@@ -31,69 +32,116 @@ welcome to buy me a beer if you'd like.
 
 ----
 
-### MSPGCC install instructions
+### MSPGCC 'Uniarch'
 
-This was tested on a new install of Ubuntu Server 11.04 64 bits. It's a server because I run it on a VMWare Virtual Machine, and I only connect to it via `ssh` and Mac's 'Connect to...' system. So basically I develop on the comfort of my mac, while having Ubuntu's flexibility for compiling.
+Uniarch was an initiative to unify all the work left behind by mspgcc3 and mspgcc4, while also separating the boundaries between the compiler and TI header files.
 
-This are the instructions for building MSPGCC 3, not 4, which is apparently a little more advanced, but this works for me, so this is what I use. If it works, don't fix it.
+This instructions are based on the comments inside the patch files of mspgcc.
 
-####gcc-3.4 installation
+First, we will need Git, so if you don't have it:
 
-First, we need gcc-3.4 because this will compile mspgcc's tools. To do this run the following commands
+ sudo apt-get install git
 
-    cd
-    mkdir DELEME
-    cd DELEME
-    wget http://ge.archive.ubuntu.com/ubuntu/pool/universe/g/gcc-3.4/libstdc++6-dev_3.4.6-6ubuntu5_amd64.deb
-    wget http://ge.archive.ubuntu.com/ubuntu/pool/universe/g/gcc-3.4/cpp-3.4_3.4.6-6ubuntu5_amd64.deb
-    wget http://ge.archive.ubuntu.com/ubuntu/pool/universe/g/gcc-3.4/gcc-3.4_3.4.6-6ubuntu5_amd64.deb
-    wget http://ge.archive.ubuntu.com/ubuntu/pool/universe/g/gcc-3.4/gcc-3.4-base_3.4.6-6ubuntu5_amd64.deb
-    wget http://ge.archive.ubuntu.com/ubuntu/pool/universe/g/gcc-3.4/g++-3.4_3.4.6-6ubuntu5_amd64.deb
-    sudo dpkg -i *.deb
-    cd ..
-    rm -rf DELEME
+Then, in our home, we will create a workspace to build our binaries
 
-With this, you SHOULD have a working gcc-3.4. Maybe, if you're as unlucky as me, you'll have a non working version of gcc-3.4, which can be tested with this code
+ cd
+ mkdir -p msp430
+ cd msp430
 
-    cd
-    mkdir DELEME
-    cd DELEME
-    echo "int main(){return 0;}" >> temp.c
-    gcc-3.4 temp.c
-    cd ..
-    rm -rf DELEME
+We will need the following dependencies to build mspgcc. I don't really know which ones are really needed, but with this ones it works, and I'm lazy.
 
-If you have a '-lgcc_s' not found error, then you'll have to run this others commands too.
+ sudo apt-get install patch ncurses-dev build-essential bison flex libgmp3-dev libmpfr-dev libmpc-dev texinfo
 
-    sudo rm -rf /usr/lib/gcc/x86_64-linux-gnu/3.4.6/libgcc_s.so
-    sudo ln /lib/x86_64-linux-gnu/libgcc_s.so.1 /usr/lib/gcc/x86_64-linux-gnu/3.4.6/libgcc_s.so
+First things first, we will need the latest release of the patch files from mspgcc. As of this writing, the latest release was 20110612
 
-####mspgcc actual building
+ wget http://sourceforge.net/projects/mspgcc/files/mspgcc/mspgcc-20110612.tar.bz2/download -O mspgcc-20110612.tar.bz2
+ tar xjf mspgcc-20110612.tar.bz2
+ cd mspgcc-20110612
 
-So now we will be building mspgcc from scratch. First, we will need some dependencies
+Now we will need to download, patch and install the specific versions of binutils, gcc and gdb that will be used in mspgcc. This instructions are inside the patch files, but I list them here for a better reference
+The bin directory will reside in /usr/local/mspgcc for this instructions. If you want to change the location, be sure to change it everywhere there is a prefix path
 
-    sudo apt-get install cvs patch ncurses-dev
+ mkdir -p sources
+ cd sources
+ 
+ wget ftp://ftp.gnu.org/pub/gnu/binutils/binutils-2.21.tar.gz
+ tar xzf binutils-2.21.tar.gz
+ ( cd binutils-2.21 ; patch -p1 < ../../msp430-binutils-2.21-20110612.patch )
+ mkdir -p BUILD/binutils
+ cd BUILD/binutils
+ ../../binutils-2.21/configure --target=msp430 --prefix=/usr/local/mspgcc 2>&1 | tee co
+ make 2>&1 | tee mo
+ sudo make install 2>&1 | tee moi
+ cd ../..
 
-Now, we'll get the source code and compile it
+That should have the mspgcc binutils running. Now to gcc...
 
-    cvs -d:pserver:anonymous@mspgcc.cvs.sourceforge.net:/cvsroot/mspgcc login
-    cvs -z3 -d:pserver:anonymous@mspgcc.cvs.sourceforge.net:/cvsroot/mspgcc co -P .
-    cd packaging
-    make folders
-    CC=gcc-3.4 make build`
+ wget ftp://ftp.gnu.org/pub/gnu/gcc/gcc-4.5.2/gcc-4.5.2.tar.gz
+ tar xzf gcc-4.5.2.tar.gz
+ ( cd gcc-4.5.2 ; patch -p1 < ../../msp430-gcc-4.5.2-20110612.patch )
+ mkdir -p BUILD/gcc
+ cd BUILD/gcc
+ ../../gcc-4.5.2/configure --target=msp430 --enable-languages=c,c++ --prefix=/usr/local/mspgcc 2>&1 | tee co
+ make 2>&1 | tee mo
+ sudo make install 2>&1 | tee moi
+ cd ../..
 
-This last step can take some time, and it won't show any output in the mean time. But don't worry, it will end. After it's finished, we need to make the new binaries accessible, so we'll add the following lines at the end of `~/.bashrc`
+Done with gcc, on to gdb
 
-    #MSPGCC binaries
-    export PATH=$PATH:/opt/mspgcc/bin
+ wget ftp://ftp.gnu.org/pub/gnu/gdb/gdb-7.2.tar.gz
+ tar xzf gdb-7.2.tar.gz
+ ( cd gdb-7.2 ; patch -p1 < ../../msp430-gdb-7.2-20110103.patch )
+ mkdir -p BUILD/gdb
+ cd BUILD/gdb
+ ../../gdb-7.2/configure --target=msp430 --prefix=/usr/local/mspgcc 2>&1 | tee co
+ make 2>&1 | tee mo
+ sudo make install 2>&1 | tee moi
+ cd ../..
 
-Finally, to be able to use mspgcc without restarting the terminal, we source that last file
+Perfect, so all thats left is the microcontroller definitions that are part of msp430mcu and libc that is part of msp430-libc. This files are not downloaded yet. What we have are 2 files *.version that define what version to download. The generic link to download msp430mcu is http://sourceforge.net/projects/mspgcc/files/msp430mcu/msp430mcu-YYYYMMDD.tar.bz2 and the one for msp430-libc https://sourceforge.net/projects/mspgcc/files/msp430-libc/msp430-libc-YYYYMMDD.tar.bz2 . YYYMMDD are replaced by the contents of msp430mcu.version and msp430-libc.version
 
-    source ~/.bashrc
+ wget http://sourceforge.net/projects/mspgcc/files/msp430mcu/msp430mcu-20110613.tar.bz2
+ tar xjf msp430mcu-20110613.tar.bz2
+ cd msp430mcu-20110613
 
-Now you should have `msp430-gcc` ready to go.
+Now, I don't know why, but the regular way doesn't work on my setup. So, for the sake of getting this done, edit scripts/install.sh and place this on the top, just after the comments
 
-####mspdebug USB permissions
+ MSP430MCU_ROOT=${2}
+
+Then run
+
+ sudo ./scripts/install.sh /usr/local/mspgcc $(pwd)
+ cd ..
+ 
+Finally we need to compile and install libc for mspgcc
+
+ wget https://sourceforge.net/projects/mspgcc/files/msp430-libc/msp430-libc-20110612.tar.bz2
+ tar xjf msp430-libc-20110612.tar.bz2
+ cd msp430-libc-20110612/src
+
+Now, this is also weird, the regular way would be to do make; make PREFIX=/usr/local/mspgcc , but for some reason, make doesn't work for me. So, edit Makefile and change lines 23, 24, and 25 to
+
+ override CC = ${bindir}/msp430-gcc
+ override AS = ${bindir}/msp430-gcc -x assembler-with-cpp
+ override AR = ${bindir}/msp430-ar
+
+Some of you may say "But you didn't setup the PATH yet, so obviously it's not gonna work". Well, the first time I installed mspgcc uniarch, I DID setup PATH to find the binaries, but it still didn't work and I had to do this same changes. So, when you're done changing Makefile, do:
+
+ make PREFIX=/usr/local/mspgcc
+ sudo make PREFIX=/usr/local/mspgcc install
+
+Finally, we will setup the PATH in .bashrc . Add this lines to the end of ~/.bashrc
+
+ #MSPGCC binary path
+ export PATH=$PATH:/usr/local/mspgcc/bin
+
+Now source .bashrc to be able to call `msp430-gcc` right away. 
+
+ source ~/.bashrc
+
+And that's it! You can compile the projects now. 
+
+###MSPDEBUG USB permissions
 
 Now, having mspdebug installed with the instructions from their webpage, connect your Launchpad to Ubuntu and run `mspdebug rf2500`. If it doesn't work, don't panic, follow the next steps (based on this [article](http://karuppuswamy.com/wordpress/2010/10/07/debugging-ez430-chronos-with-mspdebug-tool-in-ubuntu-linux/).).
 

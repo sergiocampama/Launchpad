@@ -8,59 +8,64 @@
 # http://en.wikipedia.org/wiki/Beerware
 
 #Setting the compiler
-CC = "msp430-gcc"
+cc = "msp430-gcc"
 
-MMCU = "msp430x2011"
+#Check if a target mcu was specified
+mcu = ENV['mcu']
+puts "No mcu specified, using 'msp430g2211'.\nUsage: 'rake mcu=msp430g2211'" if mcu.nil?
+mcu ||= "msp430g2211"
 
 #Setting the FLAGS for compile and link time. If using a different MSP430 be sure to change
 #the mmcu option
-CFLAGS = "-mmcu=#{MMCU} -c -Wall -Os "
-LFLAGS = "-mmcu=#{MMCU} "
+cflags = "-mmcu=#{mcu} -c -Wall -Os "
+lflags = "-mmcu=#{mcu} "
 
 #Defining the folder where the compiled objects will reside
-OBJ_DIR = 'obj'
-directory OBJ_DIR
+obj_dir = 'obj'
+directory obj_dir
 
 #Including all the subfolders inside src to be able to use '#include <path/in/src/header.h>'
-INCLUDES = FileList['src/**/*.h']
-CFLAGS << INCLUDES.join(' -I').insert(0, '-I') unless INCLUDES.empty?
+includes = FileList['src/**/*.h']
+cflags += includes.join(' -I').insert(0, '-I') unless includes.empty?
 
 #Include all source files inside src
 #Remember, this is for a single app, so there is no purpose in placing source files of another project
 #However, this would be the place to include files from other projects, or libraries outside this project
-SRC_FILES = FileList['src/**/*.c']
-OBJ_FILES = SRC_FILES.collect { |src| File.join(OBJ_DIR, File.basename(src).ext('obj'))}
+src_files = FileList['src/**/*.c']
+obj_files = src_files.collect { |src| File.join(obj_dir, File.basename(src).ext('obj'))}
 
 #The name of the output binary
-BIN_OUT = 'bin.elf'
+bin_out = 'bin.elf'
 
-#
+#Just in case someone likes to call it 'build'
 task :build => :link
 
-#This makes calling 'rake' without task to create the binary
+#This makes the default task to link the binary
 task :default => :link
 
 #Task for linking the compiled object
 task :link => :compile do
-  puts "Linking binary "
-  `#{CC} #{LFLAGS} #{OBJ_FILES.join(" ")} -o #{BIN_OUT}`
-  abort "Abort: Error al linkear" unless $?.to_i == 0
-  puts "Binary generated succesfully"
+  puts "Linking binary for #{mcu}..."
+  `#{cc} #{lflags} #{obj_files.join(" ")} -o #{bin_out}`
+	#This is to check that the output status was 0, if not, something bad happened
+  abort "Abort: Error linking #{bin_out}" unless $?.to_i == 0 
+  puts "#{bin_out} generated succesfully!"
 end
 
 #Task for compiling all source files
-task :compile => OBJ_DIR do
-	`rm -rf #{File.join(OBJ_DIR, '*')}/* #{BIN_OUT}`
-  SRC_FILES.each do |source|
-    puts "Compiling #{File.basename(source)}"
-		`#{CC} #{CFLAGS} #{source} -o #{File.join(OBJ_DIR, File.basename(source).ext('obj'))}`
-    abort "Abort: Error al compilar #{File.basename(source)}" unless $?.to_i == 0
+task :compile => obj_dir do
+	`rm -rf #{File.join(obj_dir, '*')}/* #{bin_out}`
+  src_files.each do |source|
+    puts "Compiling #{File.basename(source)}..."
+		`#{cc} #{cflags} #{source} -o #{File.join(obj_dir, File.basename(source).ext('obj'))}`
+		#This is to check that the output status was 0, if not, something bad happened
+    abort "Abort: Error compiling #{File.basename(source)}" unless $?.to_i == 0
   end
 end
 
 #Task that should install the binary in the Launchpad, but the way mspdebug works doesn't make it
 #possible yet
 task :install do
-  abort "Abort: #{BIN_OUT} not found. Run 'rake build' first" unless File.exists?(BIN_OUT)
-  puts "Run 'mspdebug rf2500'.\nInside, execute the following commands:\n\terase\n\tprog #{BIN_OUT}\n\trun"
+  abort "Abort: #{bin_out} not found. Run 'rake' first" unless File.exists?(bin_out)
+  puts "Run 'mspdebug rf2500'.\nInside, execute the following commands:\n\terase\n\tprog #{bin_out}\n\trun"
 end

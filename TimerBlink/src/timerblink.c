@@ -7,8 +7,10 @@
 // Released under the Beerware License
 // http://en.wikipedia.org/wiki/Beerware
 
-#include <io.h>
-#include <signal.h>
+#include <msp430.h>
+
+//In uniarch there is no more signal.h to sugar coat the interrupts definition, so we do it here
+#define interrupt(x) void __attribute__((interrupt (x))) 
 
 //Defines to help understand what is attached to each port
 #define LED_DIR P1DIR
@@ -21,7 +23,7 @@
 void timer_init()
 {
 	//Select ACLK, TimerA counter divisor in 1
-	TACTL |= TASSEL_1 + ID_DIV1; 
+	TACTL |= TASSEL_1 + ID_1; 
 
 	//Enables the CCR0 interrupt
 	TACCTL0 |= CCIE; 
@@ -58,7 +60,7 @@ void timer_start()
 
 	//Since the crystal attached to LFXT is 32.768 kHz, 
 	//when the counter reaches this value, exactly 1 second should have passed
-	//This could be off a little because of the clock skew (20 ppm)
+	//The clock skew is 20 ppm, which at this frequency, should be +-.65 Hz
 	TACCR0 = 32768;
 }
 

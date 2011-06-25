@@ -7,8 +7,9 @@
 // Released under the Beerware License
 // http://en.wikipedia.org/wiki/Beerware
 
-#include <io.h>
-#include <signal.h>
+#include <msp430.h>
+//In uniarch there is no more signal.h to sugar coat the interrupts definition, so we do it here
+#define interrupt(x) void __attribute__((interrupt (x)))
 
 //Defines to help understand what is attached to each port
 #define LED_DIR P1DIR
