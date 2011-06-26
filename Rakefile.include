@@ -63,9 +63,10 @@ task :compile => obj_dir do
 	end
 end
 
-#Task that should install the binary in the Launchpad, but the way mspdebug works doesn't make it
-#possible yet
 task :install do
 	abort "Abort: #{bin_out} not found. Run 'rake' first" unless File.exists?(bin_out)
-	puts "Run 'mspdebug rf2500'.\nInside, execute the following commands:\n\terase\n\tprog #{bin_out}\n\trun"
+	puts "Installing #{bin_out}..."
+	`mspdebug rf2500 erase "prog bin.elf"`
+	abort "Abort: Error installing #{bin_out}" unless $?.to_i == 0
+	puts "#{bin_out} succesfully installed!"
 end
