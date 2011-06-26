@@ -45,27 +45,27 @@ task :default => :link
 
 #Task for linking the compiled object
 task :link => :compile do
-  puts "Linking binary for #{mcu}..."
-  `#{cc} #{lflags} #{obj_files.join(" ")} -o #{bin_out}`
+	puts "Linking binary for #{mcu}..."
+	`#{cc} #{lflags} #{obj_files.join(" ")} -o #{bin_out}`
 	#This is to check that the output status was 0, if not, something bad happened
-  abort "Abort: Error linking #{bin_out}" unless $?.to_i == 0 
-  puts "#{bin_out} generated succesfully!"
+	abort "Abort: Error linking #{bin_out}" unless $?.to_i == 0 
+	puts "#{bin_out} generated succesfully!"
 end
 
 #Task for compiling all source files
 task :compile => obj_dir do
 	`rm -rf #{File.join(obj_dir, '*')}/* #{bin_out}`
-  src_files.each do |source|
-    puts "Compiling #{File.basename(source)}..."
+	src_files.each do |source|
+		puts "Compiling #{File.basename(source)}..."
 		`#{cc} #{cflags} #{source} -o #{File.join(obj_dir, File.basename(source).ext('obj'))}`
 		#This is to check that the output status was 0, if not, something bad happened
-    abort "Abort: Error compiling #{File.basename(source)}" unless $?.to_i == 0
-  end
+		abort "Abort: Error compiling #{File.basename(source)}" unless $?.to_i == 0
+	end
 end
 
 #Task that should install the binary in the Launchpad, but the way mspdebug works doesn't make it
 #possible yet
 task :install do
-  abort "Abort: #{bin_out} not found. Run 'rake' first" unless File.exists?(bin_out)
-  puts "Run 'mspdebug rf2500'.\nInside, execute the following commands:\n\terase\n\tprog #{bin_out}\n\trun"
+	abort "Abort: #{bin_out} not found. Run 'rake' first" unless File.exists?(bin_out)
+	puts "Run 'mspdebug rf2500'.\nInside, execute the following commands:\n\terase\n\tprog #{bin_out}\n\trun"
 end
