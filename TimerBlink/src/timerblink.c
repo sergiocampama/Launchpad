@@ -23,7 +23,7 @@
 void timer_init()
 {
 	//Select ACLK, TimerA counter divisor in 1
-	TACTL |= TASSEL_1 + ID_1; 
+	TACTL |= TASSEL_1 + ID_0; 
 
 	//Enables the CCR0 interrupt
 	TACCTL0 |= CCIE; 
