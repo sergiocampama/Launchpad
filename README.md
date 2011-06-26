@@ -34,7 +34,7 @@ welcome to buy me a beer if you'd like.
 
 ### MSPGCC 'Uniarch'
 
-Uniarch was an initiative to unify all the work left behind by mspgcc3 and mspgcc4, while also separating the boundaries between the compiler and TI header files. This 'branch' of mspgcc is the most advanced one, having over 300 supported MSP430 devices.
+Uniarch is an initiative to unify all the work left behind by mspgcc3 and mspgcc4, while also separating the boundaries between the compiler and TI header files. This 'branch' of mspgcc is the most advanced one, having over 300 supported MSP430 devices.
 
 This instructions are based on the comments inside the patch files of mspgcc.
 
