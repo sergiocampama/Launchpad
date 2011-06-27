@@ -122,15 +122,18 @@ int main()
 	return 0;
 }
 
+//Counter of interrupts inside a cycle
 uint16_t count_in_cycle = 0;
 
 //CCR1 timer interrupt, which breathes the LED
 interrupt(TIMERA1_VECTOR) TIMERA1_ISR() {
 	TACCTL1 &= ~CCIFG;
 	
-	
 	uint8_t new_ccr = 1;
 	
+	//The complete cycle will take 1000 interrupts, which accounts to 1000/200 = 5 seconds
+	//The first half of the cycle will use the look up table upwards, and the second half
+	//will use it downwards
 	if (count_in_cycle < 500)
 	{
 		new_ccr = curve[count_in_cycle >> 1];
@@ -145,7 +148,7 @@ interrupt(TIMERA1_VECTOR) TIMERA1_ISR() {
 	
 	count_in_cycle++;
 	//This is to set the TACCR1 register after the TAR has passed its value, 
-	//so we dont get 2 interrupt calls in the same cycle
+	//so we dont get 2 interrupt calls in the same TACCR0 cycle
 	while (TAR <= new_ccr);
 	TACCR1 = new_ccr;
 }
