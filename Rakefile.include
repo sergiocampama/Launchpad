@@ -49,7 +49,7 @@ task :link => :compile do
 	`#{cc} #{lflags} #{obj_files.join(" ")} -o #{bin_out}`
 	#This is to check that the output status was 0, if not, something bad happened
 	abort "Abort: Error linking #{bin_out}" unless $?.to_i == 0 
-	puts "#{bin_out} generated succesfully!"
+	puts "#{bin_out} succesfully generated!"
 end
 
 #Task for compiling all source files
