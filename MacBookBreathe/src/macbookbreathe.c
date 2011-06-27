@@ -106,9 +106,6 @@ void timer_start()
 	//will be 200 Hz, which is enough to not feel the flickering
 	TACCR0 = 164;
 	
-	//This should put the led in half the power
-	TACCR1 = 164;
-	
 	TACTL |= MC_1;//Sets the TimerA count mode in UP, and thus starting the Timer
 }
 
