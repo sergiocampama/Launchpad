@@ -127,11 +127,12 @@ uint16_t piezo_cycles = 0;
 interrupt(TIMERA0_VECTOR) TIMERA0_ISR() {
 	
 	//if we are playing and the time has not yet passed to stop
-	//playing, return. To understand this value, read first the long comment just before
+	//playing, return. I prefer this over a while approach, as this saves battery
+	//To understand this value, read first the long comment just before
 	//setting TACCR0 and TACCR1 inside the 'if'. Ok, so we want to play for half a second,
 	//which in a crystal of 32768 Hz, is 16384. This interrupt will be called every 64 cycles,
 	//value calculated below. So, we will achieve 16384 cycles (half a second)
-	//after 16384/64 interrupt calls, which equals 256.
+	//after 16384/64 interrupt calls, which equals to 256.
 	//Remember, if you want a frequency of X, you need to set TACCR0 to 32768/X.
 	//Then if you want to play for T seconds, set this comparison to 32768*T/TACCR0
 	if (playing && piezo_cycles++ < 256) return;
