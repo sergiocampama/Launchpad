@@ -108,7 +108,7 @@ uint64_t random_seed = 65738265;
 uint16_t random_uniform()
 {
 	random_seed = (16807*random_seed) % (2147483647LLU);
-	return random_seed % 5 + 2;//% 880 + 20;
+	return random_seed % 880 + 20;
 }
 
 //actual_delay counts the number of seconds passed since the last
