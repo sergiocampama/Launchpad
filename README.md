@@ -36,13 +36,7 @@ welcome to buy me a beer if you'd like.
 
 Uniarch is an initiative to unify all the work left behind by mspgcc3 and mspgcc4, while also separating the boundaries between the compiler and TI header files. This 'branch' of mspgcc is the most advanced one, having over 300 supported MSP430 devices.
 
-This instructions are based on the comments inside the patch files of mspgcc.
-
-First, we will need Git, so if you don't have it:
-
-	sudo apt-get install git
-
-Then, in our home, we will create a workspace to build our binaries
+This instructions are based on the comments inside the patch files of mspgcc. So, in our home, we will create a workspace to build our binaries
 
 	cd
 	mkdir -p msp430
