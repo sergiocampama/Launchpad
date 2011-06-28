@@ -44,7 +44,7 @@ This instructions are based on the comments inside the patch files of mspgcc. So
 
 We will need the following dependencies to build mspgcc. I don't really know which ones are really needed, but with this ones it works, and I'm lazy.
 
-	sudo apt-get install patch ncurses-dev build-essential bison flex libgmp3-dev libmpfr-dev libmpc-dev texinfo
+	sudo apt-get install patch ncurses-dev build-essential bison flex libgmp3-dev libmpfr-dev libmpc-dev texinfo zlib1g-dev
 
 First things first, we will need the latest release of the patch files from mspgcc. As of this writing, the latest release was 20110612
 
