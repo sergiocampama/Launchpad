@@ -120,6 +120,9 @@ So, on to compile libc (remember that we still are inside msp430/mspgcc-20110612
 We use PATH=$PATH inside sudo because ubuntu cleans the path when using sudo, and we need it to get the binaries to the right place without login in as root. It's a hack that shouldn't be. Read more about it [here](http://stackoverflow.com/questions/257616/sudo-changes-path-why).
 And that's it! You can compile the projects now. 
 
+If your still having problems, maybe this links can help you. (For now there's only one, but as they appear on the interwebs I will post them here)
+	[JustinTech](http://justinstech.org/2011/06/msp430-uniarch-mspgcc-or-mspgcc4/)
+
 ###MSPDEBUG USB permissions
 
 Now, having mspdebug installed with the instructions from their webpage, connect your Launchpad to Ubuntu and run `mspdebug rf2500`. If it doesn't work, don't panic, follow the next steps (based on this [article](http://karuppuswamy.com/wordpress/2010/10/07/debugging-ez430-chronos-with-mspdebug-tool-in-ubuntu-linux/).).
