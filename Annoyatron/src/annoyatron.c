@@ -81,7 +81,7 @@ void timer_start()
 	//Since the crystal attached to LFXT is 32.768 kHz, 
 	//when the counter reaches this value, exactly 1 second should have passed
 	//The clock skew is 20 ppm, which at this frequency, should be +-.65 Hz
-	TACCR0 = 32768;
+	TACCR0 = 32767;
 	
 	//Sets the TimerA count mode in UP, and thus starting the Timer
 	TACTL |= MC_1;
@@ -150,7 +150,7 @@ interrupt(TIMERA0_VECTOR) TIMERA0_ISR() {
 	
 	//We set the normal time on CCR0 so the interrupt
 	//interval is still 1 second
-	TACCR0 = 32768;
+	TACCR0 = 32767;
 	
 	if (++actual_delay >= delay_s)
 	{
