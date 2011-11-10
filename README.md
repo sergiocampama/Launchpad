@@ -170,9 +170,10 @@ Done with gcc, on to gdb
 	#Update to mspgcc
 	patch -p1 < ../mspgcc-20110716/msp430-gdb-7.2-20110103.patch
 	#No patches for this one
+	cd ..
 	mkdir -p BUILD/gdb
 	cd BUILD/gdb
-	../gdb-7.2/configure --target=msp430 --program-prefix="msp430-" --with-mpfr-include=/usr/local/include -with-mpfr-lib=/usr/local/lib --with-gmp-include=/usr/local/include -with-gmp-lib=/usr/local/lib --with-mpc-include=/usr/local/include -with-mpc-lib=/usr/local/lib
+	../../gdb-7.2/configure --target=msp430 --program-prefix="msp430-" --with-mpfr-include=/usr/local/include -with-mpfr-lib=/usr/local/lib --with-gmp-include=/usr/local/include -with-gmp-lib=/usr/local/lib --with-mpc-include=/usr/local/include -with-mpc-lib=/usr/local/lib
 	make
 	sudo make install
 	cd ../..
@@ -195,7 +196,7 @@ Now we need to download, patch, compile and install libc for mspgcc.
 	cd src
 	make
 	sudo make PREFIX=/usr/local install
-	cd ..
+	cd ../..
 
 And that's it! You can compile the projects now. 
 
@@ -207,6 +208,7 @@ Now, to install `mspdebug`, follow this instructions
 	#make doesn't work for me unless I specify the WITHOUT_READLINE part
 	make WITHOUT_READLINE=1
 	sudo make install
+	cd ..
 
 If your still having problems, maybe this links can help you. (For now there's only one, but as they appear on the interwebs I will post them here)
 	[JustinTech](http://justinstech.org/2011/06/msp430-uniarch-mspgcc-or-mspgcc4/)
