@@ -126,7 +126,12 @@ int main()
 uint16_t count_in_cycle = 0;
 
 //CCR1 timer interrupt, which breathes the LED
+#ifdef TIMER1_A1_VECTOR
+interrupt(TIMER0_A1_VECTOR) TIMERA1_ISR() {
+#endif
+#ifdef TIMERA1_VECTOR
 interrupt(TIMERA1_VECTOR) TIMERA1_ISR() {
+#endif
 	TACCTL1 &= ~CCIFG;
 	
 	uint8_t new_ccr = 1;
