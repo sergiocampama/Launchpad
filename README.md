@@ -116,7 +116,7 @@ Since this release is a LTS version, there will be many patches fixing various b
 	
 	cd ..
 
-Now we will need to download, patch and install the specific versions of binutils, gcc and gdb that will be used in mspgcc. This instructions are inside the patch files, but I list them here for a better reference.
+Now we will need to download, patch, compile and install the specific versions of binutils, gcc and gdb that will be used in mspgcc.
 The bin directory will reside in /usr/local/bin for this instructions. 
 
 	wget http://ftpmirror.gnu.org/binutils/binutils-2.21.1a.tar.bz2
