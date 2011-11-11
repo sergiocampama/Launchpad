@@ -61,11 +61,11 @@ For GMP:
 
 For MPFR:
 
-	wget http://www.mpfr.org/mpfr-current/mpfr-3.0.1.tar.bz2
-	tar xvfj mpfr-3.0.1.tar.bz2
+	wget http://www.mpfr.org/mpfr-current/mpfr-3.1.0.tar.bz2
+	tar xvfj mpfr-3.1.0.tar.bz2
 	mkdir mpfr
 	cd mpfr
-	../mpfr-3.0.1/configure
+	../mpfr-3.1.0/configure
 	make
 	sudo make install
 	cd ..
