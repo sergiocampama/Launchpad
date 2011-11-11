@@ -81,10 +81,14 @@ For MPC:
 	sudo make install
 	cd ..
 
-After installing those libs, add these lines to your `~/.bashrc` file, and source it. Again, this worked for me, but maybe you won't need it. 
+After installing those libs, add these lines to your `~/.bashrc` file, and then `source` it. Again, this worked for me, but maybe you won't need it. 
 	
 	#Adding /usr/local/lib to LD_LIBRARY_PATH
 	export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+ 
+And source it:
+ 
+	source ~/.bashrc
 
 So, now that we have that running, we'll fetch all the latest files from the mspgcc project. As of this writing, the latest release was 20110716, with Long Term Support
 
