@@ -140,7 +140,7 @@ The bin directory will reside in /usr/local/bin for this instructions.
 
 That should have the mspgcc binutils running. Now to gcc...
 
-	wget wget http://ftpmirror.gnu.org/gcc/gcc-4.5.3/gcc-core-4.5.3.tar.bz2
+	wget http://ftpmirror.gnu.org/gcc/gcc-4.5.3/gcc-core-4.5.3.tar.bz2
 	tar xvfj gcc-core-4.5.3.tar.bz2
 	cd gcc-4.5.3
 	#Update to mspgcc
