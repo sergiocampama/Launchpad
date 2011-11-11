@@ -36,7 +36,7 @@ welcome to buy me a beer if you'd like.
 
 Uniarch is an initiative to unify all the work left behind by mspgcc3 and mspgcc4, while also separating the boundaries between the compiler and TI header files. This 'branch' of mspgcc is the most advanced one, having over 300 supported MSP430 devices.
 
-These instructions are based on [this article](http://sourceforge.net/apps/mediawiki/mspgcc/index.php?title=Install:fromsource) with some minor modifications. So, in our home, we will create a workspace to build our binaries
+These instructions are highly based on [this article](http://sourceforge.net/apps/mediawiki/mspgcc/index.php?title=Install:fromsource) with some minor modifications. So, in our home, we will create a workspace to build our binaries
 
 	cd
 	mkdir -p msp430
