@@ -1,7 +1,7 @@
 ## Launchpad Projects
 
 This are simple Launchpad projects to get stuff going. I think it's somewhat difficult to get functional code in the internet, so I want to do my part by creating simple projects using various techniques.
-These projects are tested on the mspgcc uniarch releases.
+These projects are tested on the mspgcc uniarch releases. With this guide and a $4.30 Launchpad, there's no excuse not to try out embedded coding!
 
 Sergio Campama 2011 
 http://kaipi.me
