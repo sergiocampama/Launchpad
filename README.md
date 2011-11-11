@@ -73,7 +73,7 @@ For MPFR:
 For MPC:
 
 	wget http://www.multiprecision.org/mpc/download/mpc-0.9.tar.gz
-	tar xvf mpc-0.9.tar.gz
+	tar xvfz mpc-0.9.tar.gz
 	mkdir mpv
 	cd mpv
 	../mpc-0.9/configure
@@ -89,7 +89,7 @@ After installing those libs, add these lines to your `~/.bashrc` file, and sourc
 So, now that we have that running, we'll fetch all the latest files from the mspgcc project. As of this writing, the latest release was 20110716, with Long Term Support
 
 	wget http://sourceforge.net/projects/mspgcc/files/mspgcc/mspgcc-20110716.tar.bz2
-	tar xjf mspgcc-20110716.tar.bz2
+	tar xvfj mspgcc-20110716.tar.bz2
 	
 Since this release is a LTS version, there will be many patches fixing various bugs. We will now download all the latests patches into a folder called `patches`
 
@@ -120,7 +120,7 @@ Now we will need to download, patch, compile and install the specific versions o
 The bin directory will reside in /usr/local/bin for this instructions. 
 
 	wget http://ftpmirror.gnu.org/binutils/binutils-2.21.1a.tar.bz2
-	tar xzf binutils-2.21.1a.tar.bz2
+	tar xvfj binutils-2.21.1a.tar.bz2
 	cd binutils-2.21.1
 	#Bring it to mspgcc
 	patch -p1 < ../mspgcc-20110716/msp430-binutils-2.21.1-20110716.patch
@@ -141,7 +141,7 @@ The bin directory will reside in /usr/local/bin for this instructions.
 That should have the mspgcc binutils running. Now to gcc...
 
 	wget wget http://ftpmirror.gnu.org/gcc/gcc-4.5.3/gcc-core-4.5.3.tar.bz2
-	tar xzf gcc-core-4.5.3.tar.bz2
+	tar xvfj gcc-core-4.5.3.tar.bz2
 	cd gcc-4.5.3
 	#Update to mspgcc
 	patch -p1 < ../mspgcc-20110716/msp430-gcc-4.5.3-20110706.patch
@@ -165,7 +165,7 @@ That should have the mspgcc binutils running. Now to gcc...
 Done with gcc, on to gdb
 
 	wget http://ftpmirror.gnu.org/gdb/gdb-7.2a.tar.bz2
-	tar xzf gdb-7.2a.tar.bz2
+	tar xvfj gdb-7.2a.tar.bz2
 	cd gdb-7.2
 	#Update to mspgcc
 	patch -p1 < ../mspgcc-20110716/msp430-gdb-7.2-20110103.patch
@@ -181,7 +181,7 @@ Done with gcc, on to gdb
 Perfect, so all that's left is the microcontroller definitions that are part of msp430mcu and libc that is part of msp430-libc. This files are not downloaded yet (they're not inside the mspgcc package downloaded before, just version references which may be outdated)
 
 	wget http://sourceforge.net/projects/mspgcc/files/msp430mcu/msp430mcu-20111107.tar.bz2
-	tar xjf msp430mcu-20111107.tar.bz2
+	tar xvfj msp430mcu-20111107.tar.bz2
 	cd msp430mcu-20111107
 	sudo MSP430MCU_ROOT=`pwd` ./scripts/install.sh /usr/local/ 
 	cd ..
@@ -189,7 +189,7 @@ Perfect, so all that's left is the microcontroller definitions that are part of 
 Now we need to download, patch, compile and install libc for mspgcc.
 
 	wget http://sourceforge.net/projects/mspgcc/files/msp430-libc/msp430-libc-20110612.tar.bz2
-	tar xjf msp430-libc-20110612.tar.bz2
+	tar xvfj msp430-libc-20110612.tar.bz2
 	cd msp430-libc-20110612
 	patch -p1 < ../patches/msp430-libc-20110612-sf3387164.patch
 	patch -p1 < ../patches/msp430-libc-20110612-sf3402836.patch
