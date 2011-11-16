@@ -124,7 +124,12 @@ uint8_t playing = 0;
 uint16_t piezo_cycles = 0;
 
 //CCR0 timer interrupt, which toggles the LEDs
+//Theres more than one definition for this interrupt, depending on the model
+#ifdef TIMER0_A0_VECTOR
+interrupt(TIMER0_A0_VECTOR) TIMERA0_ISR() {
+#else
 interrupt(TIMERA0_VECTOR) TIMERA0_ISR() {
+#endif
 	
 	//if we are playing and the time has not yet passed to stop
 	//playing, return. I prefer this over a while approach, as this saves battery
