@@ -16,6 +16,7 @@
 #define LED_OUT P1OUT
 
 //Interrupt Enable
+#define BUTTON_REN P1REN
 #define BUTTON_IE P1IE
 #define BUTTON_IES P1IES
 #define BUTTON_IFG P1IFG
@@ -29,6 +30,7 @@
 
 void button_init()
 {
+	BUTTON_REN |= BUTTON;
 	BUTTON_IE |= BUTTON; //We activate the button interrupt
 	BUTTON_IES |= BUTTON; //High to low edge
 	BUTTON_IFG &= ~BUTTON;
@@ -73,10 +75,10 @@ int main()
 //Port 1 interrupt, which toggles the LEDs
 interrupt(PORT1_VECTOR) PORT1_ISR() {
 	
-	if (BUTTON & BUTTON_IFG)
-	{
+	//if (BUTTON & BUTTON_IFG)
+	//{
 		LED_OUT ^= LED_GREEN + LED_RED;
 		BUTTON_IFG &= ~BUTTON;
-	}
+	//}
 	
 }
