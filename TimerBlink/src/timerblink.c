@@ -78,6 +78,9 @@ int main()
 }
 
 //CCR0 timer interrupt, which toggles the LEDs
+#ifndef TIMERA0_VECTOR
+#define TIMERA0_VECTOR TIMER0_A0_VECTOR
+#endif
 interrupt(TIMERA0_VECTOR) TIMERA0_ISR() {
 	LED_OUT ^= LED_GREEN + LED_RED;
 }
