@@ -12,6 +12,8 @@ http://ti.com/launchpadwiki
 Released under the Beerware License 
 http://en.wikipedia.org/wiki/Beerware
 
+If you find this guide useful, please consider donating Bitcoins.  Donation address: 151iNE4BVkq3F9cPYSjvyzskzUnwTzBquz
+
 ----
 
 ### Dependencies
